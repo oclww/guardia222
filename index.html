@@ -1,21 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - [Votre Nom Complet]</title>
+    
+    <style>
+        /* --- Réglages de base --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Conteneur principal du CV --- */
+        .cv-container {
+            display: flex;
+            max-width: 1200px;
+            min-height: 100vh;
+            margin: 20px auto;
+            background: #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden; /* Pour que les coins arrondis s'appliquent aux enfants */
+        }
+
+        /* --- Barre Latérale (Sidebar) --- */
+        .sidebar {
+            flex: 1; /* Prend 1 part de l'espace */
+            background-color: #2c3e50; /* Bleu marine foncé */
+            color: #ecf0f1; /* Blanc cassé */
+            padding: 30px;
+        }
+
+        .profile-pic-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        /* --- CERCLE POUR LA PHOTO --- */
+        /* Décommentez le 'img' et commentez le 'div' si vous mettez une vraie image */
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            background-color: #bdc3c7; /* Gris clair */
+            border-radius: 50%;
+            margin: 0 auto;
+            border: 4px solid #34495e;
+            /* Pour utiliser une vraie image :
+            <img src="votre-photo.jpg" alt="Photo de profil" class="profile-pic"> 
+            Et stylez 'img.profile-pic' avec :
+            width: 150px;
+            height: 150px;
+            object-fit: cover; 
+            border-radius: 50%;
+            */
+        }
+
+        .sidebar h1 { /* Nom */
+            text-align: center;
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 2em;
+        }
+        .sidebar h2 { /* Titre / Poste */
+            text-align: center;
+            color: #1abc9c; /* Vert/Bleu */
+            font-weight: 500;
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 30px;
+        }
+
+        .sidebar section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar h3 { /* Titres de section (Contact, Compétences) */
+            color: #1abc9c;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            text-align: left;
+            border-bottom: none;
+            padding-bottom: 5px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar li {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .sidebar .contact li {
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .contact strong {
+            color: #ecf0f1;
+            margin-right: 8px;
+            min-width: 60px; /* Pour aligner les valeurs */
+            font-weight: 600;
+        }
+        
+        /* Styles pour les barres de compétences (facultatif) */
+        .skills li {
+            margin-bottom: 15px;
+        }
+        .skill-bar {
+            background: #34495e;
+            border-radius: 5px;
+            height: 10px;
+            overflow: hidden;
+        }
+        .skill-level {
+            background: #1abc9c;
+            height: 100%;
+        }
 
 
-<html>
+        /* --- Contenu Principal --- */
+        .main-content {
+            flex: 2.5; /* Prend 2.5 parts de l'espace */
+            padding: 40px;
+        }
+
+        .main-content section {
+            margin-bottom: 30px;
+        }
+
+        .main-content h2 { /* Titres de section (Profil, Expérience) */
+            color: #2c3e50;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .job, .degree {
+            margin-bottom: 25px;
+        }
+
+        .job h3, .degree h3 { /* Titre du poste, Nom du diplôme */
+            color: #34495e;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .job .date, .degree .date {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .job .company, .degree .school {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .main-content ul {
+            padding-left: 20px;
+        }
+        .main-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        /* --- Responsive (Mobile) --- */
+        @media (max-width: 900px) {
+            .cv-container {
+                flex-direction: column; /* Les colonnes s'empilent */
+                margin: 0;
+                border-radius: 0;
+            }
+            .sidebar, .main-content {
+                flex: none; /* Reset la taille flex */
+                padding: 25px;
+            }
+            .sidebar h1 { font-size: 1.8em; }
+            .sidebar h2 { font-size: 1.2em; }
+            .main-content h2 { font-size: 1.6em; }
+            .job h3, .degree h3 { font-size: 1.2em; }
+        }
+
+    </style>
+</head>
 <body>
 
-<h1>Voici la premiere version de mon site </h1>
-<p>La deuxieme version arrive...........</p>
+    <div class="cv-container">
+        
+        <aside class="sidebar">
+            
+            <div class="profile-pic-container">
+                <div class="profile-pic"></div>
+                </div>
 
-<h2> Voici la deuxieme version </h2>
+            <h1>[Votre Nom]</h1>
+            <h2>[Titre / Poste Actuel]</h2>
 
-<h1 style="background-color:Dodgerblue;">C'est ma 3eme version</h1>
-<<<<<<< Updated upstream
-<h1> c est vrmt la fin </h1>
-<h1> Hello </h1>
-=======
+            <section class="contact">
+                <h3>Contact</h3>
+                <ul>
+                    <li><strong>Email:</strong> email@example.com</li>
+                    <li><strong>Tél:</strong> 06 12 34 56 78</li>
+                    <li><strong>LinkedIn:</strong> linkedin.com/in/...</li>
+                    <li><strong>Ville:</strong> Paris, France</li>
+                </ul>
+            </section>
+            
+            <section class="skills">
+                <h3>Compétences</h3>
+                <ul>
+                    <li>
+                        HTML5 & CSS3
+                        <div class="skill-bar"><div class="skill-level" style="width: 90%;"></div></div>
+                    </li>
+                    <li>
+                        JavaScript (ES6+)
+                        <div class="skill-bar"><div class="skill-level" style="width: 75%;"></div></div>
+                    </li>
+                    <li>
+                        Gestion de Projet
+                        <div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div>
+                    </li>
+                    <li>
+                        Suite Adobe
+                        <div class="skill-bar"><div class="skill-level" style="width: 60%;"></div></div>
+                    </li>
+                </ul>
+            </section>
 
-<h1> c'est vrmt la fin </h1>
-<h1> Hello Word </h1>
->>>>>>> Stashed changes
+            <section class="languages">
+                <h3>Langues</h3>
+                <ul>
+                    <li>
+                        Français (Natif)
+                        <div class="skill-bar"><div class="skill-level" style="width: 100%;"></div></div>
+                    </li>
+                    <li>
+                        Anglais (Courant - C1)
+                        <div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div>
+                    </li>
+                </ul>
+            </section>
+
+        </aside>
+
+        <main class="main-content">
+
+            <section class="profile-summary">
+                <h2>Profil</h2>
+                <p>
+                    Rédigez ici une courte accroche professionnelle de 2-3 phrases.
+                    Mettez en avant vos années d'expérience, votre spécialité principale
+                    et ce que vous recherchez. Dynamique et proactif, je suis spécialisé dans...
+                </p>
+            </section>
+
+            <section class="experience">
+                <h2>Expérience Professionnelle</h2>
+                
+                <div class="job">
+                    <h3>[Titre du Poste]</h3>
+                    <p><span class="company">[Nom de l'entreprise]</span> | <span class="date">[Date de début] – [Date de fin]</span></p>
+                    <ul>
+                        <li>Description de la mission principale ou d'une réalisation clef.</li>
+                        <li>Autre responsabilité ou succès (utilisez des verbes d'action).</li>
+                        <li>Gestion de... / Optimisation de... / Développement de...</li>
+                        <li>Résultat chiffré (ex: Augmentation de X% de...)</li>
+                    </ul>
+                </div>
+
+                <div class="job">
+                    <h3>[Titre du Poste Précédent]</h3>
+                    <p><span class="company">[Nom de l'entreprise]</span> | <span class="date">[Date de début] – [Date de fin]</span></p>
+                    <ul>
+                        <li>Mission 1 effectuée.</li>
+                        <li>Mission 2 effectuée.</li>
+                    </ul>
+                </div>
+                
+                </section>
+
+            <section class="education">
+                <h2>Formation</h2>
+
+                <div class="degree">
+                    <h3>[Nom du Diplôme]</h3>
+                    <p><span class="school">[Nom de l'école / Université]</span> | <span class="date">[Année d'obtention]</span></p>
+                    <p>
+                        Brève description de la spécialité ou du mémoire (optionnel).
+                    </p>
+                </div>
+
+                <div class="degree">
+                    <h3>[Autre Formation / Certification]</h3>
+                    <p><span class="school">[Nom de l'organisme]</span> | <span class="date">[Année]</span></p>
+                </div>
+
+            </section>
+            
+            <section class="interests">
+                <h2>Centres d'intérêt</h2>
+                <p>
+                    Sport (ex: Course à pied), Lecture (ex: Science-Fiction), Projets personnels (ex: Bénévolat, Projets open-source), Voyages...
+                </p>
+            </section>
+
+        </main>
+
+    </div>
+
 </body>
 </html>

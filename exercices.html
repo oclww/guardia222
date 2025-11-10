@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini (Inspiration X)</title>
+    
+    <style>
+        /* ================================================
+        CSS (STYLE)
+        ================================================
+        */
+
+        :root {
+            --background-color: #000000;     /* Fond noir */
+            --text-color: #e7e9ea;         /* Texte principal (blanc cassé) */
+            --text-color-secondary: #71767b; /* Texte secondaire (gris) */
+            --border-color: #2f3336;       /* Bordures (gris foncé) */
+            --primary-color: #4285F4;      /* BLEU - Couleur d'accent (Google/Gemini) */
+            --primary-hover: #1B66C9;     /* BLEU - Hover plus foncé */
+        }
+
+        /* --- Réglages de base --- */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center; /* Centre le conteneur principal */
+        }
+
+        /* --- Conteneur global de l'application --- */
+        .app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1280px; /* Largeur max typique */
+            min-height: 100vh;
+        }
+
+        /* --- 1. Barre de navigation (Gauche) --- */
+        .sidebar {
+            flex-basis: 275px; /* Largeur fixe */
+            flex-shrink: 0;
+            padding: 0 10px;
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: sticky; /* Reste en place au scroll */
+            top: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: var(--text-color);
+            padding: 20px 10px;
+            /* L'emoji "Sparkle" de Gemini */
+            content: '✨';
+        }
+        .logo::before {
+             content: '✨'; /* Logo Gemini */
+        }
+
+        .nav-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links li a {
+            display: block;
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.2s;
+        }
+        
+        /* Lien actif (Accueil) */
+        .nav-links li a.active {
+            color: var(--primary-color);
+            background-color: rgba(66, 133, 244, 0.1);
+        }
+
+        .nav-links li a:hover {
+            background-color: rgba(66, 133, 244, 0.1); /* Hover léger bleu */
+            color: var(--primary-color);
+        }
+
+        .ask-button {
+            background-color: var(--primary-color);
+            color: #fff; /* Texte blanc sur bouton bleu */
+            font-weight: 700;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 30px;
+            width: 90%;
+            padding: 15px 0;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .ask-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- 2. Fil d'actualité (Centre) --- */
+        .main-feed {
+            flex-grow: 1;
+            max-width: 600px; /* Largeur max du fil */
+            border-right: 1px solid var(--border-color);
+        }
+
+        .feed-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
+            backdrop-filter: blur(5px); /* Effet de flou */
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .feed-header h1 {
+            margin: 0;
+            font-size: 1.5em; /* Un peu plus petit pour "Accueil" */
+            font-weight: 700;
+        }
+
+        /* --- Bloc pour poser une question --- */
+        .prompt-box {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+        }
+        .prompt-avatar {
+             width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--text-color-secondary);
+        }
+        .prompt-input {
+            flex-grow: 1;
+        }
+        .prompt-input textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            resize: none;
+            color: var(--text-color);
+            font-size: 1.3em;
+            font-family: inherit;
+            padding-top: 12px;
+            outline: none;
+        }
+
+        /* --- Bloc "Post" (Réponse de l'IA) --- */
+        .post {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 15px;
+        }
+        
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-color); /* Avatar bleu pour Gemini */
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900;
+        }
+        .post-avatar::before {
+            content: '✨';
+            font-size: 1.5em;
+        }
+        
+        .post-content {
+            width: 100%;
+        }
+
+        .post-author {
+            font-weight: 700;
+        }
+        .post-handle {
+            color: var(--text-color-secondary);
+            margin-left: 5px;
+        }
+        
+        .post-text {
+            margin: 5px 0 15px 0;
+            line-height: 1.5;
+            font-size: 1.1em;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-color-secondary);
+        }
+        .post-actions span {
+            cursor: pointer;
+            padding: 5px;
+        }
+        /* Hover des actions en bleu */
+        .post-actions span:hover {
+            color: var(--primary-color);
+        }
+
+
+        /* --- 3. Widgets (Droite) --- */
+        .right-sidebar {
+            flex-basis: 350px; /* Largeur fixe */
+            flex-shrink: 0;
+            padding: 10px 20px;
+            height: 100vh;
+            position: sticky; /* Reste en place au scroll */
+            top: 0;
+        }
+        
+        input[type="search"] {
+            width: 100%;
+            box-sizing: border-box; /* Pour que le padding soit inclus */
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            background-color: #202327; /* Gris très foncé */
+            color: var(--text-color);
+            font-size: 1em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="search"]::placeholder {
+            color: var(--text-color-secondary);
+        }
+        
+        .widget {
+            background-color: #16181C; /* Fond de widget un peu plus clair */
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .widget h3 {
+            font-size: 1.3em;
+            margin-top: 0;
+            color: var(--text-color); /* Titres de widget en blanc */
+        }
+        
+        .widget li {
+            list-style: none;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        .widget li:last-child {
+            border-bottom: none;
+        }
+        .widget li:hover {
+            background-color: #202327;
+        }
+        
+        .widget li strong {
+            display: block;
+            font-size: 1.1em;
+            color: var(--primary-color); /* Sujets en bleu */
+        }
+        
+        .widget li span {
+            color: var(--text-color-secondary);
+            font-size: 0.9em;
+        }
+        
+        /* --- Responsive --- */
+        
+        @media (max-width: 1200px) {
+            .right-sidebar { display: none; }
+        }
+        @media (max-width: 1000px) {
+             /* Cache la nav mais garde le logo */
+            .sidebar {
+                flex-basis: 70px;
+                align-items: center;
+            }
+            .nav-links, .ask-button {
+                display: none;
+            }
+        }
+        @media (max-width: 600px) {
+             .sidebar { display: none; }
+            .main-feed { max-width: 100%; border: none; }
+            .prompt-box { padding: 10px; }
+            .post { padding: 10px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <nav class="sidebar left-sidebar">
+            <div class="logo"></div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Accueil</a></li>
+                <li><a href="#">Explorer les sujets</a></li>
+                <li><a href="#">Historique</a></li>
+                <li><a href="#">Paramètres</a></li>
+            </ul>
+            <button class="ask-button">Demander</button>
+        </nav>
+
+        <main class="main-feed">
+            
+            <header class="feed-header">
+                <h1>Accueil</h1>
+            </header>
+
+            <div class="prompt-box">
+                <div class="prompt-avatar"></div>
+                <div class="prompt-input">
+                    <textarea placeholder="Que voulez-vous savoir ?"></textarea>
+                </div>
+            </div>
+
+            <article class="post">
+                <div class="post-avatar"></div>
+                <div class="post-content">
+                    <div class="post-header">
+                        <span class="post-author">Gemini</span>
+                        <span class="post-handle">@GoogleAI</span>
+                    </div>
+                    <p class="post-text">
+                        Bonjour ! C'est la maquette de mon interface inspirée de "X". 
+                        J'utilise le fond noir que vous aimez, mais avec ma propre palette de couleurs.
+                        <br><br>
+                        Le fil principal contient nos interactions, et les widgets à droite 
+                        vous proposent des suggestions.
+                    </p>
+                    <div class="post-actions">
+                        <span>👍 J'aime</span>
+                        <span>👎 Pas utile</span>
+                        <span>🔗 Partager</span>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <aside class="sidebar right-sidebar">
+            
+            <input type="search" placeholder="Rechercher...">
+            
+            <div class="widget">
+                <h3>Sujets suggérés</h3>
+                <ul>
+                    <li>
+                        <strong>Générer du code HTML</strong>
+                        <span>Code & Développement</span>
+                    </li>
+                    <li>
+                        <strong>Idées de recettes</strong>
+                        <span>Cuisine & Quotidien</span>
+                    </li>
+                    <li>
+                        <strong>Résumer un texte</strong>
+                        <span>Productivité</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="widget">
+                <h3>Fonctionnalités à essayer</h3>
+                <ul>
+                    <li>
+                        <strong>Analyser une image</strong>
+                        <span>Demandez-moi ce qu'il y a sur une photo.</span>
+                    </li>
+                    <li>
+                        <strong>Planifier un voyage</strong>
+                        <span>Obtenez un itinéraire complet.</span>
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
+
+    </div>
+
+</body>
+</html>

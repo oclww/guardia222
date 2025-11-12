@@ -36,33 +36,10 @@
             padding: 30px;
         }
 
-        .profile-pic-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        /* --- CERCLE POUR LA PHOTO --- */
-        /* Décommentez le 'img' et commentez le 'div' si vous mettez une vraie image */
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            background-color: #bdc3c7; /* Gris clair */
-            border-radius: 50%;
-            margin: 0 auto;
-            border: 4px solid #34495e;
-            /* Pour utiliser une vraie image :
-            <img src="votre-photo.jpg" alt="Photo de profil" class="profile-pic"> 
-            Et stylez 'img.profile-pic' avec :
-            width: 150px;
-            height: 150px;
-            object-fit: cover; 
-            border-radius: 50%;
-            */
-        }
-
         .sidebar h1 { /* Nom */
             text-align: center;
             color: #fff;
+            margin-top: 20px; /* Ajout d'un espace en haut (car pas de photo) */
             margin-bottom: 5px;
             font-size: 2em;
         }
@@ -101,6 +78,7 @@
         .sidebar .contact li {
             display: flex;
             align-items: center;
+            word-break: break-all; /* Pour que les emails longs ne dépassent pas */
         }
         .sidebar .contact strong {
             color: #ecf0f1;
@@ -147,7 +125,7 @@
             margin-bottom: 25px;
         }
 
-        .job h3, .degree h3 { /* Employe Mcdo et Le Bac */
+        .job h3, .degree h3 { /* Titre du poste, Nom du diplôme */
             color: #34495e;
             font-size: 1.3em;
             margin-bottom: 5px;
@@ -197,18 +175,14 @@
         
         <aside class="sidebar">
             
-            <div class="profile-pic-container">
-                <div class="profile-pic"></div>
-                </div>
-
-            <h1>Le Bras</h1>
-            <h2>Etudiant Guardia</h2>
+            <h1>Matis Le Bras</h1>
+            <h2>Etudiant A Guardia CyberSecurity</h2>
 
             <section class="contact">
                 <h3>Contact</h3>
                 <ul>
-                    <li><strong>Email:</strong> matis@example.com</li>
-                    <li><strong>Tél:</strong> 06 12 34 56 78</li>
+                    <li><strong>Email:</strong> matis78180@icloud.com</li>
+                    <li><strong>Tél:</strong> 07 66 24 40 26</li>
                     <li><strong>LinkedIn:</strong> linkedin.com/in/mlebras</li>
                     <li><strong>Ville:</strong> Paris, France</li>
                 </ul>
@@ -218,20 +192,20 @@
                 <h3>Compétences</h3>
                 <ul>
                     <li>
-                        HTML5 & CSS3
-                        <div class="skill-bar"><div class="skill-level" style="width: 90%;"></div></div>
-                    </li>Determine
-                    <li>Fort
-                        JavaScript (ES6+)
-                        <div class="skill-bar"><div class="skill-level" style="width: 75%;"></div></div>
-                    </li>Le plus fort
-                    <li>uuu
-                        Gestion de Projet
-                        <div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div>
+                        Réseaux & Sécurité
+                        <div class="skill-bar"><div class="skill-level" style="width: 70%;"></div></div>
                     </li>
                     <li>
-                        Suite Adobe
+                        HTML/CSS
                         <div class="skill-bar"><div class="skill-level" style="width: 60%;"></div></div>
+                    </li>
+                    <li>
+                        JavaScript
+                        <div class="skill-bar"><div class="skill-level" style="width: 40%;"></div></div>
+                    </li>
+                    <li>
+                        Photoshop
+                        <div class="skill-bar"><div class="skill-level" style="width: 50%;"></div></div>
                     </li>
                 </ul>
             </section>
@@ -244,8 +218,8 @@
                         <div class="skill-bar"><div class="skill-level" style="width: 100%;"></div></div>
                     </li>
                     <li>
-                        Anglais (Courant - C1)
-                        <div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div>
+                        Anglais (Courant)
+                        <div class="skill-bar"><div class="skill-level" style="width: 80%;"></div></div>
                     </li>
                 </ul>
             </section>
@@ -257,7 +231,7 @@
             <section class="profile-summary">
                 <h2>Profil</h2>
                 <p>
-                    Dynamique et proactif, je suis spécialisé dans la cyber et html 
+                    Dynamique et proactif, avec 3 ans d'expérience en réseau.
                 </p>
             </section>
 
@@ -265,22 +239,12 @@
                 <h2>Expérience Professionnelle</h2>
                 
                 <div class="job">
-                    <h3>[Titre du Poste]</h3>
-                    <p><span class="company">Mcdo</span> | <span class="date"> 08/08/1900 – 20/12/2000</span></p>
+                    <h3>Employe Polyvalent</h3>
+                    <p><span class="company">Mcdo</span> | <span class="date">Janvier 2022 – Aujourd'hui</span></p>
                     <ul>
-                        <li>Description de la mission principale ou d'une réalisation clef.</li>
-                        <li>Autre responsabilité ou succès (utilisez des verbes d'action).</li>
-                        <li>Gestion de... / Optimisation de... / Développement de...</li>
-                        <li>Résultat chiffré (ex: Augmentation de X% de...)</li>
-                    </ul>
-                </div>
-
-                <div class="job">
-                    <h3>[Titre du Poste Précédent]</h3>
-                    <p><span class="company">[Nom de l'entreprise]</span> | <span class="date">[Date de début] – [Date de fin]</span></p>
-                    <ul>
-                        <li>Mission 1 effectuée.</li>
-                        <li>Mission 2 effectuée.</li>
+                        <li>Gestion de reseau en entreprise</li>
+                        <li>Optimisation de PC</li>
+                        <li>Développement Python</li>
                     </ul>
                 </div>
                 
@@ -290,16 +254,16 @@
                 <h2>Formation</h2>
 
                 <div class="degree">
-                    <h3>[Nom du Diplôme]</h3>
-                    <p><span class="school">[Nom de l'école / Université]</span> | <span class="date">[Année d'obtention]</span></p>
+                    <h3>Bachelor Cybersécurité (en cours)</h3>
+                    <p><span class="school">Guardia CyberSecurity School</span> | <span class="date">Aujourd'hui</span></p>
                     <p>
-                        Brève description de la spécialité ou du mémoire (optionnel).
+                        Formation en cours axée sur la sécurité des systèmes d'information, les réseaux et la gestion des risques.
                     </p>
                 </div>
 
                 <div class="degree">
-                    <h3>[Autre Formation / Certification]</h3>
-                    <p><span class="school">[Nom de l'organisme]</span> | <span class="date">[Année]</span></p>
+                    <h3>BAC</h3>
+                    <p><span class="school">[Nom de votre Lycée]</span> | <span class="date">2024</span></p>
                 </div>
 
             </section>
@@ -307,7 +271,7 @@
             <section class="interests">
                 <h2>Centres d'intérêt</h2>
                 <p>
-                    Sport (ex: Course à pied), Lecture (ex: Science-Fiction), Projets personnels (ex: Bénévolat, Projets open-source), Voyages...
+                    Musculation, Voyages
                 </p>
             </section>
 

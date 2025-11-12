@@ -1,586 +1,544 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV Matis Le Bras - Cybersécurité</title>
+    <title>CV Matis Le Bras - Cybersécurité (Optimisé)</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0d1117;
+        /* Fond de base */
+        color: #e6edf3;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* * OPTIMISATION #1 : Remplacement du Canvas JS par un fond CSS animé
+         * Beaucoup plus léger et ne consomme presque pas de CPU.
+        */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background: radial-gradient(800px circle at 30% 120%, rgba(139, 92, 246, 0.15), transparent 40%),
+          radial-gradient(600px circle at 70% -30%, rgba(236, 72, 153, 0.1), transparent 30%);
+        animation: moveGradient 15s ease-in-out infinite alternate;
+      }
+
+      @keyframes moveGradient {
+        from {
+          transform: translate(0, 0) rotate(0deg);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0d1117;
-            color: #e6edf3;
-            overflow-x: hidden;
-            position: relative;
+        to {
+          transform: translate(100px, 50px) rotate(20deg);
+        }
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Header avec effet glassmorphism (conservé car c'est un seul élément) */
+      .header {
+        text-align: center;
+        margin-bottom: 50px;
+        padding: 50px 40px;
+        background: rgba(22, 27, 34, 0.8);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 24px;
+        backdrop-filter: blur(20px);
+        /* Conservé ici */
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+        animation: fadeInDown 1s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
         }
 
-        /* Canvas pour les bulles animées */
-        #bubbleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 2;
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header h1 {
+        font-size: 3.5em;
+        background: linear-gradient(135deg, #a78bfa, #ec4899, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+      }
+
+      .header h2 {
+        font-size: 1.4em;
+        color: #a78bfa;
+        margin-bottom: 25px;
+        font-weight: 400;
+        position: relative;
+        z-index: 1;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #8b949e;
+        transition: all 0.3s ease;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: rgba(139, 92, 246, 0.05);
+        /* OPTIMISATION #2 : Prépare le navigateur à l'animation de transformation */
+        will-change: transform, background;
+      }
+
+      .contact-item:hover {
+        color: #a78bfa;
+        background: rgba(139, 92, 246, 0.15);
+        transform: translateY(-2px);
+      }
+
+      /* * OPTIMISATION #3 : Suppression du 'backdrop-filter' sur les sections
+         * Remplacé par un fond solide mais translucide.
+         * C'est le plus gros gain de performance au survol.
+        */
+      .section {
+        background: rgba(22, 27, 34, 0.9);
+        /* Fond plus opaque, moins de calcul */
+        padding: 35px;
+        margin-bottom: 30px;
+        border-radius: 20px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        /* backdrop-filter: blur(15px); */
+        /* SUPPRIMÉ - C'était la cause du lag */
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeIn 1s ease;
+        position: relative;
+        overflow: hidden;
+        /* OPTIMISATION #2 : Prépare le navigateur */
+        will-change: transform, box-shadow, border-color;
+      }
+
+      /* OPTIMISATION #4 : Remplacement de l'animation 'left' par 'transform' (plus rapide) */
+      .section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+        transition: transform 0.6s ease;
+        transform: translateX(-100%);
+        /* Position initiale */
+      }
+
+      .section:hover::before {
+        transform: translateX(100%);
+        /* Position finale */
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
 
-        /* Header avec effet glassmorphism */
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 50px 40px;
-            background: rgba(22, 27, 34, 0.8);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-            animation: fadeInDown 1s ease;
-            position: relative;
-            overflow: hidden;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
+      .section:hover {
+        border-color: rgba(139, 92, 246, 0.4);
+        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+        transform: translateY(-8px);
+      }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+      .section h3 {
+        font-size: 1.9em;
+        color: #a78bfa;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+        position: relative;
+        font-weight: 600;
+      }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+      .section h3::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(90deg, #a78bfa, #ec4899);
+        transition: width 0.3s ease;
+      }
 
+      .section:hover h3::after {
+        width: 120px;
+      }
+
+      /* Profil */
+      .profile {
+        font-size: 1.1em;
+        line-height: 1.9;
+        color: #c9d1d9;
+      }
+
+      /* Expérience */
+      .experience-item {
+        margin-bottom: 30px;
+        padding: 25px;
+        background: rgba(30, 35, 45, 0.6);
+        border-radius: 16px;
+        border-left: 4px solid #8b5cf6;
+        transition: all 0.4s ease;
+        position: relative;
+        will-change: transform, background;
+        /* Optimisation */
+      }
+
+      /* OPTIMISATION #5 : Remplacement de l'animation 'height' par 'transform: scaleY' */
+      .experience-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        /* Occupe 100% de la hauteur */
+        background: linear-gradient(180deg, #ec4899, #8b5cf6);
+        transition: transform 0.4s ease;
+        transform: scaleY(0);
+        /* Commence à 0 */
+        transform-origin: top;
+        /* Animation depuis le haut */
+      }
+
+      .experience-item:hover::before {
+        transform: scaleY(1);
+        /* Grandit à 100% */
+      }
+
+      .experience-item:hover {
+        background: rgba(30, 35, 45, 0.9);
+        transform: translateX(15px);
+        box-shadow: -5px 5px 20px rgba(139, 92, 246, 0.2);
+      }
+
+      .experience-item h4 {
+        color: #a78bfa;
+        font-size: 1.4em;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .company {
+        color: #ec4899;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 1.1em;
+      }
+
+      .date {
+        color: #8b949e;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+      }
+
+      .experience-item ul {
+        margin-left: 20px;
+        color: #c9d1d9;
+      }
+
+      /* Compétences avec effet morphing */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+      }
+
+      .skill-item {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.15));
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+        overflow: hidden;
+        will-change: transform, box-shadow;
+        /* Optimisation */
+        border-radius: 16px;
+        /* Ajout d'un border-radius */
+        text-align: center;
+        /* Centrage du texte */
+        border: 1px solid rgba(139, 92, 246, 0.3);
+      }
+
+      .skill-item::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.4));
+        transform: translate(-50%, -50%);
+        transition: width 0.6s ease, height 0.6s ease;
+      }
+
+      .skill-item:hover::before {
+        width: 400px;
+        height: 400px;
+      }
+
+      .skill-item:hover {
+        transform: translateY(-10px) scale(1.08) rotate(2deg);
+        box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        border-color: #a78bfa;
+      }
+
+      .skill-item span {
+        position: relative;
+        z-index: 1;
+        color: #e6edf3;
+        font-weight: 600;
+        font-size: 1.05em;
+      }
+
+      /* Formation */
+      .education-item {
+        padding: 25px;
+        background: rgba(30, 35, 45, 0.6);
+        border-radius: 16px;
+        border-left: 4px solid #ec4899;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        will-change: transform, background;
+        /* Optimisation */
+      }
+
+      .education-item:hover {
+        background: rgba(30, 35, 45, 0.9);
+        transform: translateX(10px);
+      }
+
+      .education-item h4 {
+        color: #a78bfa;
+        font-size: 1.3em;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      /* Langues */
+      .languages {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+      }
+
+      .language-item {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+        border-radius: 30px;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        transition: all 0.4s ease;
+        font-weight: 500;
+        will-change: transform, background;
+        /* Optimisation */
+      }
+
+      .language-item:hover {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+        transform: scale(1.15) rotate(-2deg);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+      }
+
+      /* Centres d'intérêt */
+      .interests {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .interest-item {
+        padding: 14px 28px;
+        background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
+        border-radius: 25px;
+        border: 1px solid rgba(236, 72, 153, 0.4);
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        font-weight: 500;
+        will-change: transform, background;
+        /* Optimisation */
+      }
+
+      .interest-item:hover {
+        transform: translateY(-5px) scale(1.1) rotate(3deg);
+        box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(139, 92, 246, 0.3));
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .header h1 {
-            font-size: 3.5em;
-            background: linear-gradient(135deg, #a78bfa, #ec4899, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header h2 {
-            font-size: 1.4em;
-            color: #a78bfa;
-            margin-bottom: 25px;
-            font-weight: 400;
-            position: relative;
-            z-index: 1;
+          font-size: 2.2em;
         }
 
         .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 25px;
-            position: relative;
-            z-index: 1;
+          flex-direction: column;
+          gap: 12px;
         }
 
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #8b949e;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: rgba(139, 92, 246, 0.05);
-        }
-
-        .contact-item:hover {
-            color: #a78bfa;
-            background: rgba(139, 92, 246, 0.15);
-            transform: translateY(-2px);
-        }
-
-        /* Sections avec effet de verre */
-        .section {
-            background: rgba(22, 27, 34, 0.7);
-            padding: 35px;
-            margin-bottom: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            backdrop-filter: blur(15px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: fadeIn 1s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .section:hover::before {
-            left: 100%;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section:hover {
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
-            transform: translateY(-8px);
-        }
-
-        .section h3 {
-            font-size: 1.9em;
-            color: #a78bfa;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
-            position: relative;
-            font-weight: 600;
-        }
-
-        .section h3::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, #a78bfa, #ec4899);
-            transition: width 0.3s ease;
-        }
-
-        .section:hover h3::after {
-            width: 120px;
-        }
-
-        /* Profil */
-        .profile {
-            font-size: 1.1em;
-            line-height: 1.9;
-            color: #c9d1d9;
-        }
-
-        /* Expérience */
-        .experience-item {
-            margin-bottom: 30px;
-            padding: 25px;
-            background: rgba(30, 35, 45, 0.6);
-            border-radius: 16px;
-            border-left: 4px solid #8b5cf6;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .experience-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 0;
-            width: 4px;
-            background: linear-gradient(180deg, #ec4899, #8b5cf6);
-            transition: height 0.4s ease;
-        }
-
-        .experience-item:hover::before {
-            height: 100%;
-        }
-
-        .experience-item:hover {
-            background: rgba(30, 35, 45, 0.9);
-            transform: translateX(15px);
-            box-shadow: -5px 5px 20px rgba(139, 92, 246, 0.2);
-        }
-
-        .experience-item h4 {
-            color: #a78bfa;
-            font-size: 1.4em;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .company {
-            color: #ec4899;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .date {
-            color: #8b949e;
-            font-size: 0.95em;
-            margin-bottom: 15px;
-        }
-
-        .experience-item ul {
-            margin-left: 20px;
-            color: #c9d1d9;
-        }
-        }
-
-        /* Compétences avec effet morphing */
         .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 20px;
+          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
         }
-
-        .skill-item {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.15));
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-item::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.4));
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .skill-item:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .skill-item:hover {
-            transform: translateY(-10px) scale(1.08) rotate(2deg);
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
-            border-color: #a78bfa;
-        }
-
-        .skill-item span {
-            position: relative;
-            z-index: 1;
-            color: #e6edf3;
-            font-weight: 600;
-            font-size: 1.05em;
-        }
-
-        /* Formation */
-        .education-item {
-            padding: 25px;
-            background: rgba(30, 35, 45, 0.6);
-            border-radius: 16px;
-            border-left: 4px solid #ec4899;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .education-item:hover {
-            background: rgba(30, 35, 45, 0.9);
-            transform: translateX(10px);
-        }
-
-        .education-item h4 {
-            color: #a78bfa;
-            font-size: 1.3em;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        /* Langues */
-        .languages {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .language-item {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
-            border-radius: 30px;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            transition: all 0.4s ease;
-            font-weight: 500;
-        }
-
-        .language-item:hover {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
-            transform: scale(1.15) rotate(-2deg);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
-        }
-
-        /* Centres d'intérêt */
-        .interests {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .interest-item {
-            padding: 14px 28px;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
-            border-radius: 25px;
-            border: 1px solid rgba(236, 72, 153, 0.4);
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            font-weight: 500;
-        }
-
-        .interest-item:hover {
-            transform: translateY(-5px) scale(1.1) rotate(3deg);
-            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(139, 92, 246, 0.3));
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2.2em; }
-            .contact-info { flex-direction: column; gap: 12px; }
-            .skills-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
-        }
+      }
     </style>
-</head>
-<body>
-    <canvas id="bubbleCanvas"></canvas>
-
-    <script>
-        // Animation de bulles fluides qui fusionnent
-        const canvas = document.getElementById('bubbleCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        class Bubble {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.radius = Math.random() * 80 + 40;
-                this.vx = (Math.random() - 0.5) * 0.8;
-                this.vy = (Math.random() - 0.5) * 0.8;
-                this.color = this.getRandomColor();
-                this.opacity = Math.random() * 0.3 + 0.1;
-            }
-            
-            getRandomColor() {
-                const colors = [
-                    'rgba(139, 92, 246,', // violet
-                    'rgba(236, 72, 153,', // rose
-                    'rgba(167, 139, 250,', // violet clair
-                    'rgba(244, 114, 182,', // rose clair
-                ];
-                return colors[Math.floor(Math.random() * colors.length)];
-            }
-            
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                if (this.x < -this.radius) this.x = canvas.width + this.radius;
-                if (this.x > canvas.width + this.radius) this.x = -this.radius;
-                if (this.y < -this.radius) this.y = canvas.height + this.radius;
-                if (this.y > canvas.height + this.radius) this.y = -this.radius;
-            }
-            
-            draw() {
-                const gradient = ctx.createRadialGradient(
-                    this.x, this.y, 0,
-                    this.x, this.y, this.radius
-                );
-                gradient.addColorStop(0, this.color + (this.opacity + 0.1) + ')');
-                gradient.addColorStop(0.5, this.color + this.opacity + ')');
-                gradient.addColorStop(1, this.color + '0)');
-                
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = gradient;
-                ctx.fill();
-            }
-        }
-
-        const bubbles = [];
-        for (let i = 0; i < 15; i++) {
-            bubbles.push(new Bubble());
-        }
-
-        function connectBubbles() {
-            for (let i = 0; i < bubbles.length; i++) {
-                for (let j = i + 1; j < bubbles.length; j++) {
-                    const dx = bubbles[i].x - bubbles[j].x;
-                    const dy = bubbles[i].y - bubbles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 300) {
-                        const opacity = (1 - distance / 300) * 0.15;
-                        const gradient = ctx.createLinearGradient(
-                            bubbles[i].x, bubbles[i].y,
-                            bubbles[j].x, bubbles[j].y
-                        );
-                        gradient.addColorStop(0, 'rgba(139, 92, 246,' + opacity + ')');
-                        gradient.addColorStop(0.5, 'rgba(236, 72, 153,' + opacity + ')');
-                        gradient.addColorStop(1, 'rgba(139, 92, 246,' + opacity + ')');
-                        
-                        ctx.beginPath();
-                        ctx.strokeStyle = gradient;
-                        ctx.lineWidth = 2;
-                        ctx.moveTo(bubbles[i].x, bubbles[i].y);
-                        ctx.lineTo(bubbles[j].x, bubbles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.fillStyle = 'rgba(13, 17, 23, 0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            bubbles.forEach(bubble => {
-                bubble.update();
-                bubble.draw();
-            });
-            
-            connectBubbles();
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-    </script>
-
+  </head>
+  <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>MATIS LE BRAS</h1>
-            <h2>Étudiant en Cybersécurité • Guardia CyberSecurity</h2>
-            <div class="contact-info">
-                <div class="contact-item">📧 matis78180@icloud.com</div>
-                <div class="contact-item">📱 07 66 24 40 26</div>
-                <div class="contact-item">💼 linkedin.com/in/mlebras</div>
-                <div class="contact-item">📍 Paris, France</div>
-            </div>
+      <div class="header">
+        <h1>MATIS LE BRAS</h1>
+        <h2>Étudiant en Cybersécurité • Guardia CyberSecurity</h2>
+        <div class="contact-info">
+          <div class="contact-item">📧 matis78180@icloud.com</div>
+          <div class="contact-item">📱 07 66 24 40 26</div>
+          <div class="contact-item">💼 linkedin.com/in/mlebras</div>
+          <div class="contact-item">📍 Paris, France</div>
         </div>
-
-        <!-- Profil -->
-        <div class="section">
-            <h3>Profil</h3>
-            <p class="profile">
-                Dynamique et proactif, avec 3 ans d'expérience en réseau. Passionné par la cybersécurité et les nouvelles technologies, je suis actuellement en formation à Guardia CyberSecurity pour développer mes compétences techniques et devenir un expert en sécurité informatique.
-            </p>
+      </div>
+      <div class="section">
+        <h3>Profil</h3>
+        <p class="profile"> Dynamique et proactif, avec 3 ans d'expérience en réseau. Passionné par la cybersécurité et les nouvelles technologies, je suis actuellement en formation à Guardia CyberSecurity pour développer mes compétences techniques et devenir un expert en sécurité informatique. </p>
+      </div>
+      <div class="section">
+        <h3>Expérience Professionnelle</h3>
+        <div class="experience-item">
+          <h4>Employé Polyvalent</h4>
+          <div class="company">McDonald's</div>
+          <div class="date">Janvier 2022 – Aujourd'hui</div>
+          <ul>
+            <li>Gestion efficace du travail en équipe dans un environnement dynamique</li>
+            <li>Développement des compétences en service client et résolution de problèmes</li>
+            <li>Respect rigoureux des procédures et standards de qualité</li>
+          </ul>
         </div>
-
-        <!-- Expérience -->
-        <div class="section">
-            <h3>Expérience Professionnelle</h3>
-            <div class="experience-item">
-                <h4>Employé Polyvalent</h4>
-                <div class="company">McDonald's</div>
-                <div class="date">Janvier 2022 – Aujourd'hui</div>
-                <ul>
-                    <li>Gestion efficace du travail en équipe dans un environnement dynamique</li>
-                    <li>Développement des compétences en service client et résolution de problèmes</li>
-                    <li>Respect rigoureux des procédures et standards de qualité</li>
-                </ul>
-            </div>
+      </div>
+      <div class="section">
+        <h3>Formation</h3>
+        <div class="education-item">
+          <h4>Formation en Cybersécurité</h4>
+          <div class="company">Guardia CyberSecurity</div>
+          <div class="date">En cours</div>
         </div>
-
-        <!-- Formation -->
-        <div class="section">
-            <h3>Formation</h3>
-            <div class="education-item">
-                <h4>Formation en Cybersécurité</h4>
-                <div class="company">Guardia CyberSecurity</div>
-                <div class="date">En cours</div>
-            </div>
-            <div class="education-item">
-                <h4>Baccalauréat</h4>
-                <div class="date">2024</div>
-            </div>
+        <div class="education-item">
+          <h4>Baccalauréat</h4>
+          <div class="date">2024</div>
         </div>
-
-        <!-- Compétences -->
-        <div class="section">
-            <h3>Compétences Techniques</h3>
-            <div class="skills-grid">
-                <div class="skill-item"><span>HTML/CSS</span></div>
-                <div class="skill-item"><span>JavaScript</span></div>
-                <div class="skill-item"><span>Réseaux</span></div>
-                <div class="skill-item"><span>Cybersécurité</span></div>
-                <div class="skill-item"><span>Python</span></div>
-                <div class="skill-item"><span>Photoshop</span></div>
-                <div class="skill-item"><span>Linux</span></div>
-                <div class="skill-item"><span>Windows</span></div>
-            </div>
+      </div>
+      <div class="section">
+        <h3>Compétences Techniques</h3>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <span>HTML/CSS</span>
+          </div>
+          <div class="skill-item">
+            <span>JavaScript</span>
+          </div>
+          <div class="skill-item">
+            <span>Réseaux</span>
+          </div>
+          <div class="skill-item">
+            <span>Cybersécurité</span>
+          </div>
+          <div class="skill-item">
+            <span>Python</span>
+          </div>
+          <div class="skill-item">
+            <span>Photoshop</span>
+          </div>
+          <div class="skill-item">
+            <span>Linux</span>
+          </div>
+          <div class="skill-item">
+            <span>Windows</span>
+          </div>
         </div>
-
-        <!-- Langues -->
-        <div class="section">
-            <h3>Langues</h3>
-            <div class="languages">
-                <div class="language-item">🇫🇷 Français - Langue maternelle</div>
-                <div class="language-item">🇬🇧 Anglais - Courant</div>
-            </div>
+      </div>
+      <div class="section">
+        <h3>Langues</h3>
+        <div class="languages">
+          <div class="language-item">🇫🇷 Français - Langue maternelle</div>
+          <div class="language-item">🇬🇧 Anglais - Courant</div>
         </div>
-
-        <!-- Centres d'intérêt -->
-        <div class="section">
-            <h3>Centres d'Intérêt</h3>
-            <div class="interests">
-                <div class="interest-item">💪 Musculation</div>
-                <div class="interest-item">✈️ Voyages</div>
-                <div class="interest-item">🔐 Cybersécurité</div>
-                <div class="interest-item">💻 Technologies</div>
-            </div>
+      </div>
+      <div class="section">
+        <h3>Centres d'Intérêt</h3>
+        <div class="interests">
+          <div class="interest-item">💪 Musculation</div>
+          <div class="interest-item">✈️ Voyages</div>
+          <div class="interest-item">🔐 Cybersécurité</div>
+          <div class="interest-item">💻 Technologies</div>
         </div>
+      </div>
     </div>
-</body>
-</html>            border-radius: 16px;
-            text-align: center;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-
-            margin-bottom: 10px;
-            line-height: 1.7;
-
+  </body>
+</html>
